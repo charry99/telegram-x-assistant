@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
   "scripts": {
     "dev": "concurrently \"npm run dev -w apps/api\" \"npm run dev -w apps/bot\" \"npm run dev -w apps/miniapp\"",
     "dev:api": "npm run dev -w apps/api",
@@ -19,6 +15,9 @@
     "db:push": "npm run generate -w apps/api && npx prisma db push",
     "db:migrate": "npx prisma migrate deploy"
   },
+  "workspaces": [
+    "apps/*"
+  ],
   "devDependencies": {
     "concurrently": "^8.2.0"
   }
