@@ -5,10 +5,10 @@
   "main": "src/index.ts",
   "scripts": {
     "dev": "npm run generate && tsx watch src/index.ts",
-    "build": "npm run generate && tsc",
+    "build": "tsc",
     "start": "npm run migrate && node dist/index.js",
-    "migrate": "PRISMA_SCHEMA_PATH=prisma/schema.prisma npx prisma db push --skip-generate",
-    "generate": "PRISMA_SCHEMA_PATH=prisma/schema.prisma npx prisma generate"
+    "migrate": "npx prisma db push --skip-generate --schema=../../prisma/schema.prisma",
+    "generate": "npx prisma generate --schema=../../prisma/schema.prisma"
   },
   "dependencies": {
     "@prisma/client": "5.8.0",
