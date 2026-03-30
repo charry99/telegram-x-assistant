@@ -1,6 +1,6 @@
 {
   "name": "telegram-x-assistant",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "type": "module",
   "description": "Telegram bot + Mini App + Backend system for X engagement - NO DUPLICATE JSON",
