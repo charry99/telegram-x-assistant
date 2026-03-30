@@ -7,8 +7,8 @@
     "dev": "npm run generate && tsx watch src/index.ts",
     "build": "npm run generate && tsc",
     "start": "npm run migrate && node dist/index.js",
-    "migrate": "npx prisma db push --schema=../../prisma/schema.prisma --skip-generate",
-    "generate": "npx prisma generate --schema=../../prisma/schema.prisma"
+    "migrate": "PRISMA_SCHEMA_PATH=prisma/schema.prisma npx prisma db push --skip-generate",
+    "generate": "PRISMA_SCHEMA_PATH=prisma/schema.prisma npx prisma generate"
   },
   "dependencies": {
     "@prisma/client": "5.8.0",
