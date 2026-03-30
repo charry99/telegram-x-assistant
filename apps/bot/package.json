@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
-    "start": "node --loader tsx src/index.ts"
+    "start": "node dist/index.js",
+    "generate": "echo 'Bot has no prisma generation step'"
   },
   "dependencies": {
     "@prisma/client": "^5.0.0",
