@@ -43,7 +43,7 @@ function XAuth({ user }: { user: any }) {
       setLoading(true);
       setError(null);
 
-      const result = await ApiClient.startXAuth();
+      const result = (await ApiClient.startXAuth()) as any;
       const { authUrl } = result.data;
 
       // Open X OAuth URL

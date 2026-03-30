@@ -144,4 +144,4 @@ export class ApiClient {
   }
 }
 
-export type { ApiResponse, PaginatedResponse } from "@telegram-x-assistant/shared/types/index.js";
+export type { ApiResponse, PaginatedResponse } from "./types.js";

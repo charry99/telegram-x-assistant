@@ -26,7 +26,7 @@ function Queue({ user }: { user: any }) {
   const loadQueue = async () => {
     try {
       setLoading(true);
-      const res = await ApiClient.getDrafts("pending", 50);
+      const res = (await ApiClient.getDrafts("pending", 50)) as any;
       setDrafts(res.data || []);
     } catch (err: any) {
       TelegramService.sendAlert("Error loading queue: " + err.message);

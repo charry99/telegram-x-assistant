@@ -1,4 +1,4 @@
-import { TelegramWebAppInitData } from "@telegram-x-assistant/shared/types/index.js";
+import { TelegramWebAppInitData } from "./types.js";
 
 export class TelegramService {
   static initialize() {

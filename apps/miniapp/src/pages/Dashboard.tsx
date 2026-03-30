@@ -28,11 +28,11 @@ function Dashboard({ user }: { user: any }) {
       setError(null);
 
       // Fetch today's stats
-      const statsRes = await ApiClient.getAnalyticsToday();
+      const statsRes = (await ApiClient.getAnalyticsToday()) as any;
       setStats(statsRes.data);
 
       // Check X auth status
-      const xStatus = await ApiClient.getXAuthStatus();
+      const xStatus = (await ApiClient.getXAuthStatus()) as any;
       setXConnected(xStatus.data.connected);
     } catch (err: any) {
       console.error("Error loading dashboard:", err);

@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import { prisma } from "../index.js";
 import { xOAuthService } from "../services/x-oauth.js";
-import { generateRandomString } from "@telegram-x-assistant/shared/utils/crypto.js";
+import { generateRandomString } from "../utils/crypto.js";
 
 const router = express.Router();
 
@@ -84,7 +84,7 @@ router.post("/callback", async (req: Request, res: Response) => {
       // Encrypt tokens
       const encryptedTokens = xOAuthService.encryptTokens(
         tokens.access_token,
-        tokens.refresh_token
+        tokens.refresh_token || ""
       );
 
       // Save or update X account

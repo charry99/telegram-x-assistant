@@ -82,3 +82,7 @@ export function decryptString(encrypted: string, key: string): string {
 export function hashString(str: string): string {
   return crypto.createHash("sha256").update(str).digest("hex");
 }
+
+export function generateRandomString(length: number = 32): string {
+  return crypto.randomBytes(length).toString("hex").slice(0, length);
+}

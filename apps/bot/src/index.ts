@@ -344,12 +344,18 @@ bot.action("help", async (ctx) => {
 
 // Handle web_app_data from Mini App
 bot.on("web_app_data", async (ctx) => {
+  if (!ctx.webAppData || !ctx.webAppData.data) {
+    await ctx.reply("Error: No data received from app");
+    return;
+  }
+
   const data = ctx.webAppData.data;
   console.log("Received Web App data:", data);
 
   // Parse the data from Mini App
   try {
-    const payload = JSON.parse(data);
+    const dataString = typeof data === "string" ? data : JSON.stringify(data);
+    const payload = JSON.parse(dataString);
     console.log("Parsed payload:", payload);
 
     // Handle different actions from Mini App

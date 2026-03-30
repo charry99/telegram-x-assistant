@@ -1,8 +1,14 @@
 import axios from "axios";
 import crypto from "crypto";
 import pkceChallenge from "pkce-challenge";
-import { XOAuthTokens } from "@telegram-x-assistant/shared/types/index.js";
-import { encryptString, decryptString } from "@telegram-x-assistant/shared/utils/crypto.js";
+import { encryptString, decryptString } from "../utils/crypto.js";
+
+export interface XOAuthTokens {
+  access_token: string;
+  refresh_token?: string;
+  token_type: string;
+  expires_in: number;
+}
 
 const X_API_BASE = "https://api.x.com";
 const X_AUTH_URL = "https://twitter.com/i/oauth2/authorize";
@@ -53,7 +59,7 @@ export class XOAuthService {
 
     return {
       authUrl: `${X_AUTH_URL}?${params.toString()}`,
-      codeVerifier,
+      codeVerifier: code_verifier,
     };
   }
 
@@ -70,7 +76,7 @@ export class XOAuthService {
           client_id: this.clientId,
           client_secret: this.clientSecret,
           redirect_uri: this.redirectUri,
-          code_verifier,
+          code_verifier: codeVerifier,
         },
         {
           headers: {
