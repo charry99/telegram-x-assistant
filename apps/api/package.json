@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "npm run generate && tsx watch src/index.ts",
     "build": "tsc",
-    "start": "npm run migrate && node dist/index.js",
+    "start": "npm run migrate-safe && node dist/index.js",
+    "migrate-safe": "npx prisma db push --skip-generate --schema=../../prisma/schema.prisma || echo 'Migration skipped (database unavailable)'",
     "migrate": "npx prisma db push --skip-generate --schema=../../prisma/schema.prisma",
     "generate": "npx prisma generate --schema=../../prisma/schema.prisma"
   },
