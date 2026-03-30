@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "Telegram bot + Mini App + Backend system for X engagement - Force rebuild with Prisma root generation",
+  "description": "Telegram bot + Mini App + Backend system for X engagement",
   "scripts": {
     "dev": "concurrently \"npm run dev -w apps/api\" \"npm run dev -w apps/bot\" \"npm run dev -w apps/miniapp\"",
     "dev:api": "npm run dev -w apps/api",
