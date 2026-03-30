@@ -1,0 +1,174 @@
+.settings-container {
+  padding: 16px;
+  max-width: 100%;
+  padding-bottom: 60px;
+}
+
+.settings-section {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.settings-section h2 {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  color: #fff;
+}
+
+.setting-item {
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.setting-item:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.setting-label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.setting-label label,
+.setting-item label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.setting-hint {
+  font-size: 12px;
+  color: #666;
+  margin: 0;
+}
+
+.setting-value {
+  color: #0088cc;
+  font-size: 14px;
+  margin: 0;
+  font-weight: 500;
+}
+
+.setting-input {
+  width: 100%;
+  background: #0a0a0a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #fff;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.setting-input:focus {
+  outline: none;
+  border-color: #0088cc;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.checkbox-label input[type="checkbox"] {
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  accent-color: #0088cc;
+}
+
+.checkbox-label span {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.tone-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.tone-btn {
+  padding: 10px;
+  background: #0a0a0a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: #aaa;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: capitalize;
+}
+
+.tone-btn.active {
+  background: #0088cc;
+  border-color: #0088cc;
+  color: #fff;
+}
+
+.quiet-hours-config {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 8px;
+  align-items: center;
+  margin-top: 12px;
+  padding: 12px;
+  background: #0a0a0a;
+  border-radius: 8px;
+  border: 1px solid #333;
+}
+
+.quiet-hours-config input {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 8px;
+  color: #fff;
+  font-size: 12px;
+}
+
+.quiet-hours-config span {
+  color: #aaa;
+  font-size: 12px;
+  text-align: center;
+}
+
+.security-info {
+  background: #0a0a0a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.security-info p {
+  font-size: 13px;
+  color: #0f7;
+  margin: 4px 0;
+}
+
+.settings-footer {
+  text-align: center;
+  padding: 20px 16px;
+  border-top: 1px solid #333;
+}
+
+.settings-footer p {
+  font-size: 12px;
+  color: #666;
+  margin: 0;
+}

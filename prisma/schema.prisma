@@ -1,0 +1,139 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String   @id @default(cuid())
+  telegramUserId    BigInt   @unique
+  telegramUsername  String?
+  firstName         String?
+  lastName          String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  // Relations
+  xAccounts         XAccount[]
+  drafts            Draft[]
+  posts             Post[]
+  watchlists        Watchlist[]
+  analyticsSnapshots AnalyticsSnapshot[]
+  activityLogs      ActivityLog[]
+
+  @@index([telegramUserId])
+}
+
+model XAccount {
+  id                String   @id @default(cuid())
+  userId            String   @db.Uuid
+  xUserId           String   @unique
+  xHandle           String   @unique
+  accessToken       String   // Encrypted in service layer
+  refreshToken      String   // Encrypted in service layer
+  connectedAt       DateTime @default(now())
+  lastSyncedAt      DateTime @default(now())
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  // Relations
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([xUserId])
+}
+
+model Draft {
+  id                String   @id @default(cuid())
+  userId            String   @db.Uuid
+  sourceType        String   // "reply", "post", "suggestion"
+  sourceRef         String?
+  draftText         String
+  tone              String?  // "sharp", "funny", "informative", "neutral"
+  status            String   @default("pending") // "pending", "approved", "rejected", "posted"
+  createdAt         DateTime @default(now())
+  approvedAt        DateTime?
+  postedAt          DateTime?
+  updatedAt         DateTime @updatedAt
+
+  // Relations
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model Post {
+  id                String   @id @default(cuid())
+  userId            String   @db.Uuid
+  xPostId           String
+  text              String
+  kind              String   // "reply", "original"
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  // Relations
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([xPostId])
+  @@index([createdAt])
+}
+
+model AnalyticsSnapshot {
+  id                String   @id @default(cuid())
+  userId            String   @db.Uuid
+  date              DateTime @db.Date
+  impressions       Int      @default(0)
+  likes             Int      @default(0)
+  replies           Int      @default(0)
+  reposts           Int      @default(0)
+  profileVisits     Int      @default(0)
+  followersDelta    Int      @default(0)
+  createdAt         DateTime @default(now())
+
+  // Relations
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+  @@index([userId])
+  @@index([date])
+}
+
+model Watchlist {
+  id                String   @id @default(cuid())
+  userId            String   @db.Uuid
+  type              String   // "keyword", "hashtag", "account"
+  value             String
+  isActive          Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  // Relations
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([type])
+}
+
+model ActivityLog {
+  id                String   @id @default(cuid())
+  userId            String   @db.Uuid
+  action            String
+  metadata          Json?
+  createdAt         DateTime @default(now())
+
+  // Relations
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+}

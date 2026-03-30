@@ -1,0 +1,15 @@
+{
+  "name": "@telegram-x-assistant/shared",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": {
+    "./types": "./src/types/index.ts",
+    "./utils/crypto": "./src/utils/crypto.ts"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
