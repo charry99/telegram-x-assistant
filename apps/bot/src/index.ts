@@ -7,8 +7,8 @@ dotenv.config();
 const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN || "");
 const prisma = new PrismaClient();
 
-const MINI_APP_URL = process.env.MINI_APP_URL || "https://your-domain.com";
-const API_BASE_URL = process.env.API_BASE_URL || "https://api.your-domain.com";
+const MINI_APP_URL = process.env.MINI_APP_URL || "https://telegram-x-assistant-production.up.railway.app/";
+const API_BASE_URL = process.env.API_BASE_URL || "https://telegram-x-assistant-production.up.railway.app";
 
 // Command: /start
 bot.start(async (ctx) => {
