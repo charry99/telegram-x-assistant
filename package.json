@@ -8,16 +8,15 @@
     "packages/*"
   ],
   "scripts": {
-    "build:shared": "npm run build -w packages/shared",
-    "build:all": "npm run build:shared && npm run build -ws",
     "dev": "concurrently \"npm run dev -w apps/api\" \"npm run dev -w apps/bot\" \"npm run dev -w apps/miniapp\"",
     "dev:api": "npm run dev -w apps/api",
     "dev:bot": "npm run dev -w apps/bot",
     "dev:miniapp": "npm run dev -w apps/miniapp",
-    "start": "npm run build:all && npm start -w apps/api",
-    "start:api": "npm run build:shared && npm start -w apps/api",
+    "build": "npm run build -w apps/api && npm run build -w apps/bot && npm run build -w apps/miniapp",
+    "start": "npm run generate -w apps/api && npm start -w apps/api",
+    "start:api": "npm run generate -w apps/api && npm start -w apps/api",
     "start:bot": "npm start -w apps/bot",
-    "db:push": "npm run build:shared && npx prisma db push",
+    "db:push": "npm run generate -w apps/api && npx prisma db push",
     "db:migrate": "npx prisma migrate deploy"
   },
   "devDependencies": {

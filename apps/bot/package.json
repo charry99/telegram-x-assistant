@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@prisma/client": "5.8.0",
-    "@telegram-x-assistant/shared": "workspace:*",
     "dotenv": "16.3.1",
     "telegraf": "4.12.0"
   },

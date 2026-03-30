@@ -2,7 +2,7 @@ import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { PrismaClient } from "@prisma/client";
-import { verifyTelegramWebAppData } from "@telegram-x-assistant/shared/utils/crypto";
+import { verifyTelegramWebAppData } from "./utils/crypto.js";
 
 // Environment
 dotenv.config();

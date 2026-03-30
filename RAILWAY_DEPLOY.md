@@ -92,7 +92,7 @@ Click on `api-service` in dashboard:
 2. Scroll to **"Deploy"** section
 3. Set **"Build Command"**:
    ```
-   npm install && npm run build:shared
+   npm install && npm run build
    ```
 
 4. Set **"Start Command"**:
@@ -122,7 +122,7 @@ Bot also runs separately.
 Click on `bot-service`:
 
 1. **Settings** tab
-2. **Build Command**: `npm install && npm run build:shared`
+2. **Build Command**: `npm install && npm run build`
 3. **Start Command**: `npm start -w apps/bot`
 4. **Save**
 
