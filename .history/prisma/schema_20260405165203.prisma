@@ -99,3 +99,42 @@ enum ScheduleStatus {
   FAILED
   CANCELLED
 }
+
+  // Relations
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+  @@index([userId])
+  @@index([date])
+}
+
+model Watchlist {
+  id                String   @id @default(cuid())
+  userId            String   @db.Uuid
+  type              String   // "keyword", "hashtag", "account"
+  value             String
+  isActive          Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  // Relations
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([type])
+}
+
+model ActivityLog {
+  id                String   @id @default(cuid())
+  userId            String   @db.Uuid
+  action            String
+  metadata          Json?
+  createdAt         DateTime @default(now())
+
+  // Relations
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+}

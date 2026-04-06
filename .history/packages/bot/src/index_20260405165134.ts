@@ -1,102 +1,51 @@
-import { Telegraf, Context } from "telegraf";
 import dotenv from "dotenv";
-import { PrismaClient } from "@prisma/client";
-
 dotenv.config();
 
-const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN || "");
-const prisma = new PrismaClient();
+import { Telegraf, Markup } from "telegraf";
+import axios from "axios";
 
-const MINI_APP_URL = process.env.MINI_APP_URL || "https://telegram-x-assistant-production.up.railway.app/";
-const API_BASE_URL = process.env.API_BASE_URL || "https://telegram-x-assistant-production.up.railway.app";
+const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN!);
+const API_URL = process.env.API_URL!;
 
-// Command: /start
 bot.start(async (ctx) => {
-  const telegramUserId = ctx.from.id;
-  const username = ctx.from.username;
-  const firstName = ctx.from.first_name;
-
-  // Get or create user
-  await prisma.user.upsert({
-    where: { telegramUserId },
-    create: {
-      telegramUserId,
-      telegramUsername: username,
-      firstName,
-    },
-    update: {
-      telegramUsername: username,
-      firstName,
-    },
-  });
-
-  const keyboard = {
-    inline_keyboard: [
-      [
-        {
-          text: "📊 Open Dashboard",
-          web_app: { url: MINI_APP_URL },
-        },
-      ],
-      [
-        { text: "📈 Today's Stats", callback_data: "stats_today" },
-        { text: "📋 Queue", callback_data: "queue" },
-      ],
-      [
-        { text: "⚙️ Settings", callback_data: "settings" },
-        { text: "❓ Help", callback_data: "help" },
-      ],
-    ],
-  };
-
-  await ctx.reply(
-    `👋 **Welcome to X Assistant!**\n\n` +
-    `Your personal AI-powered dashboard for managing X engagement.\n\n` +
-    `✨ What you can do:\n` +
-    `• 📝 Create and approve drafts\n` +
-    `• 🚀 Publish tweets safely\n` +
-    `• 📊 Track analytics\n` +
-    `• 🔗 Connect your X account\n\n` +
-    `Let's get started!`,
-    {
-      parse_mode: "Markdown",
-      reply_markup: keyboard,
-    }
-  );
+  await ctx.reply("Welcome to Telegram X Assistant.");
 });
 
-// Command: /help
-bot.help(async (ctx) => {
-  const helpText =
-    `**📖 Help & Commands**\n\n` +
-    `/start - Welcome message\n` +
-    `/dashboard - Open Mini App\n` +
-    `/stats - Today's metrics\n` +
-    `/queue - Pending drafts\n` +
-    `/settings - Configure preferences\n` +
-    `/help - This message\n\n` +
-    `**Features:**\n` +
-    `🎯 Create reply suggestions\n` +
-    `✅ Approve before posting\n` +
-    `🚀 One-click publishing\n` +
-    `📊 Real-time analytics\n` +
-    `🔐 Secure token handling`;
+bot.command("drafts", async (ctx) => {
+  const { data } = await axios.get(`${API_URL}/drafts`);
 
-  await ctx.reply(helpText, { parse_mode: "Markdown" });
+  if (!data.length) {
+    return ctx.reply("No drafts found.");
+  }
+
+  for (const draft of data.slice(0, 5)) {
+    await ctx.reply(
+      `Draft:\n\n${draft.content}\n\nStatus: ${draft.status}`,
+      Markup.inlineKeyboard([
+        [
+          Markup.button.callback(`Approve`, `approve:${draft.id}`),
+          Markup.button.callback(`Reject`, `reject:${draft.id}`)
+        ]
+      ])
+    );
+  }
 });
 
-// Command: /dashboard
-bot.command("dashboard", async (ctx) => {
-  const keyboard = {
-    inline_keyboard: [
-      [
-        {
-          text: "📊 Open Dashboard",
-          web_app: { url: MINI_APP_URL },
-        },
-      ],
-    ],
-  };
+bot.action(/approve:(.+)/, async (ctx) => {
+  const id = ctx.match[1];
+  await axios.patch(`${API_URL}/drafts/${id}/approve`);
+  await ctx.editMessageText(`Draft approved: ${id}`);
+});
+
+bot.action(/reject:(.+)/, async (ctx) => {
+  const id = ctx.match[1];
+  await axios.patch(`${API_URL}/drafts/${id}/reject`);
+  await ctx.editMessageText(`Draft rejected: ${id}`);
+});
+
+bot.launch().then(() => {
+  console.log("Telegram bot running");
+});
 
   await ctx.reply("🚀 Click below to open your dashboard:", {
     reply_markup: keyboard,
