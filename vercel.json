@@ -1,31 +1,9 @@
 {
   "version": 2,
-  "projects": [
-    {
-      "src": "apps/miniapp",
-      "use": "@vercel/static-builds",
-      "config": {
-        "maxLambdaSize": "50mb",
-        "memory": 1024,
-        "timeout": 60
-      }
-    }
-  ],
-  "builds": [
-    {
-      "src": "apps/miniapp/package.json",
-      "use": "@vercel/node@latest"
-    }
-  ],
-  "routes": [
-    {
-      "src": "^/(?!api).*",
-      "status": 200,
-      "continue": true
-    }
-  ],
+  "buildCommand": "npm run build -w apps/miniapp",
+  "outputDirectory": "apps/miniapp/.next",
   "env": {
-    "NODE_ENV": "production",
-    "VITE_API_BASE_URL": "@vite-api-base-url"
-  }
+    "NEXT_PUBLIC_API_URL": "@next-public-api-url"
+  },
+  "envPrefix": "NEXT_PUBLIC_"
 }
